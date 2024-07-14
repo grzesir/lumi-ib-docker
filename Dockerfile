@@ -21,10 +21,8 @@ RUN chown ibgateway:ibgateway /home/ibgateway/ibc/config.ini \
 USER ibgateway
 
 # Expose necessary ports
-EXPOSE 4001
-EXPOSE 4002
-EXPOSE 4003
-EXPOSE 4004
+EXPOSE 80
+EXPOSE 443
 EXPOSE 5900
 
 # Use the same command as the original image
