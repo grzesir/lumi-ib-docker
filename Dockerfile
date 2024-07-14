@@ -1,28 +1,18 @@
-FROM ghcr.io/gnzsnz/ib-gateway:10.30.1g
+FROM ghcr.io/gnzsnz/ib-gateway:stable
 
-# Set working directory
-WORKDIR /home/ibgateway
+# Set static environment variables
+ENV VNC_SERVER_PASSWORD=myVncPassword
+ENV TWOFA_TIMEOUT_ACTION=exit
+ENV RELOGIN_AFTER_2FA_TIMEOUT=yes
+ENV TIME_ZONE=America/New_York
+ENV READ_ONLY_API=no
+ENV TWS_SETTINGS_PATH=/home/ibgateway/Jts
+ENV TWS_ACCEPT_INCOMING=accept
 
-# Install necessary packages
-USER root
-RUN apt-get update && apt-get install -y xvfb openjdk-8-jdk nano vim
+# Expose necessary ports
+EXPOSE 4003
+EXPOSE 4004
+EXPOSE 5900
 
-# Set environment variable
-ENV TWS_VERSION=10.30.1g
-
-# Copy configuration files into the container
-COPY config.ini /home/ibgateway/ibc/config.ini
-COPY entrypoint.sh /home/ibgateway/entrypoint.sh
-COPY jts.ini /home/ibgateway/Jts/jts.ini
-
-# Ensure the entrypoint script and directories are executable and writable
-RUN chmod +x /home/ibgateway/entrypoint.sh && \
-    mkdir -p /tmp/.X11-unix && \
-    chmod 1777 /tmp/.X11-unix && \
-    chown -R ibgateway:ibgateway /home/ibgateway/ibc /home/ibgateway/Jts
-
-# Switch back to the non-root user
-USER ibgateway
-
-# Start the IB Gateway with xvfb
-CMD ["/home/ibgateway/entrypoint.sh"]
+# Use the same command as the original image
+CMD ["/home/ibgateway/scripts/run.sh"]
