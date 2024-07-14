@@ -10,11 +10,15 @@ ENV TWS_SETTINGS_PATH=/home/ibgateway/Jts
 ENV TWS_ACCEPT_INCOMING=accept
 
 # Copy IBC configuration file
+USER root
 COPY config.ini /home/ibgateway/ibc/config.ini
 
 # Set the correct permissions for the config.ini file
 RUN chown ibgateway:ibgateway /home/ibgateway/ibc/config.ini \
     && chmod 644 /home/ibgateway/ibc/config.ini
+
+# Switch back to the ibgateway user
+USER ibgateway
 
 # Expose necessary ports
 EXPOSE 4001
