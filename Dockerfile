@@ -14,5 +14,8 @@ EXPOSE 4003
 EXPOSE 4004
 EXPOSE 5900
 
+# Print environment variables for debugging
+RUN printenv > /home/ibgateway/env_vars.txt
+
 # Use the same command as the original image
 CMD ["/home/ibgateway/scripts/run.sh"]
