@@ -9,6 +9,9 @@ ENV READ_ONLY_API=no
 ENV TWS_SETTINGS_PATH=/home/ibgateway/Jts
 ENV TWS_ACCEPT_INCOMING=accept
 
+# Copy IBC configuration file
+COPY config.ini /home/ibgateway/ibc/config.ini
+
 # Expose necessary ports
 EXPOSE 4001
 EXPOSE 4002
